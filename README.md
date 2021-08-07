@@ -38,4 +38,4 @@ Use the Mapping or Call the Function `SpellFloat()` on the line with misspelled 
 
 If the misspelled is found in the cursor line then a Pop-Up menu with suggestions appears
 
-![Spell suggestions](./media/demo.gif)
+![Spell suggestions](./demo.gif)

@@ -3,7 +3,7 @@ SelectedWordSuggestion = ""
 local function getSuggestion()
 	SelectedWordSuggestion = vim.api.nvim_get_current_line()
 	vim.cmd("q!")
-	vim.cmd("normal! caw " .. SelectedWordSuggestion)
+	vim.cmd("normal! caw " .. SelectedWordSuggestion .. " ")
 end
 
 local function openWindow()
@@ -13,7 +13,7 @@ local function openWindow()
 		local suggestions = vim.fn.spellsuggest(vim.fn.expand(wrongWord))
 		local buf = vim.api.nvim_create_buf(false, true)
 		local winId = vim.api.nvim_open_win(buf, true,
-		  {relative='cursor', row=0, col=0, width=40, height=10} )
+		  {relative='cursor', row=1, col=0, width=40, height=10} )
 		vim.wo.number = false
 		vim.wo.relativenumber = false
 		vim.api.nvim_buf_set_keymap(buf, 'n', "<CR>", ":call GetSuggestion()<CR>", { noremap = true, silent = true })
