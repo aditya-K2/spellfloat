@@ -3,7 +3,7 @@ SelectedWordSuggestion = ""
 local function getSuggestion()
 	SelectedWordSuggestion = vim.api.nvim_get_current_line()
 	vim.cmd("q!")
-	vim.cmd("normal! caw " .. SelectedWordSuggestion .. " ")
+	vim.cmd("normal! ciw" .. SelectedWordSuggestion)
 end
 
 local function openWindow()
