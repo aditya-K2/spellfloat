@@ -16,7 +16,10 @@ local function openWindow()
 		  {relative='cursor', row=0, col=0, width=40, height=10} )
 		vim.wo.number = false
 		vim.wo.relativenumber = false
-		vim.api.nvim_buf_set_lines(buf, 1, -1, false, suggestions)
+		vim.api.nvim_buf_set_keymap(buf, 'n', "<CR>", ":call GetSuggestion()<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(buf, 'n', "<Tab>", ":normal! j0<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(buf, 'n', "<S-Tab>", ":normal! k0<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_lines(buf, 0, -1, false, suggestions)
 	end
 
 end
