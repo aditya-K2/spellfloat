@@ -14,7 +14,7 @@ spellfloat is a Neovim plugin for spelling suggestions from the built-in spell c
 
 ```vim
 
-nnoremap <C-y> :call SpellFloat() <CR>"You can use any other keymap you want
+nnoremap <leader>my :call SpellFloat() <CR>"You can use any other keymap you want
 
 ```
 - You need to enable spell-checker which can be done by adding the Following lines to your init.vim
