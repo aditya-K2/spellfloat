@@ -1,7 +1,7 @@
 SelectedWordSuggestion = ""
 local hlCursorLine = vim.api.nvim_create_namespace("CursorLine")
 local currentPosition = 0
-local suggestionsSize
+local suggestions
 
 local function getSuggestion()
 
@@ -13,27 +13,31 @@ end
 
 local function incrementHighlight(buffer)
 
-	vim.cmd("normal! j0<CR>")
-	if currentPosition>=0 then
+	if currentPosition < #suggestions then
 		currentPosition = currentPosition + 1
-	else
-		currentPosition = 0
+		vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
+		vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
+		vim.cmd("normal! j0<CR>")
+	elseif currentPosition > #suggestions - 1 then
+		currentPosition = #suggestions - 1
+		vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
+		vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
 	end
-	vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
-	vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
 
 end
 
 local function decrementHighlight(buffer)
 
-	vim.cmd("normal! k0<CR>")
-	if currentPosition < suggestionsSize then
+	if currentPosition > 0 then
 		currentPosition = currentPosition - 1
+		vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
+		vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
+		vim.cmd("normal! k0<CR>")
 	else
-		currentPosition = suggestionsSize
+		currentPosition = 0
+		vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
+		vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
 	end
-	vim.api.nvim_buf_clear_namespace(buffer, hlCursorLine,0, -1)
-	vim.api.nvim_buf_add_highlight(buffer, hlCursorLine, "PmenuSel", currentPosition , 0, -1)
 
 end
 
@@ -41,7 +45,7 @@ local function openWindow()
 
 	currentPosition = 0
 	local wrongWord = (vim.fn.spellbadword())[1]  -- get Currently misspelled Word
-	local suggestions = ""
+	local suggestionsSize
 
 	if(wrongWord ~= "") then
 		suggestions = vim.fn.spellsuggest(vim.fn.expand(wrongWord))
