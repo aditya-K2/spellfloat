@@ -5,7 +5,8 @@ spellfloat is a Neovim plugin for spelling suggestions from the built-in spell c
 # Features
 
 - Uses The built-in Vim Spell checker
-- Finds the first misspelled word in the Sentence or Takes the Word under the Cursor
+- Finds the first misspelled word in the Sentence if it finds one then it will suggest Changes through a Pop-Up Menu
+- If there is no misspelled word in the Sentence then the suggestions for the word under the cursor is suggested.
 
 # Prerequisites
 
@@ -14,14 +15,16 @@ spellfloat is a Neovim plugin for spelling suggestions from the built-in spell c
 
 ```vim
 
-nnoremap <leader>my :call SpellFloat() <CR>"You can use any other keymap you want
+nnoremap <leader>my :call SpellFloat() <CR> "You can use any other keymap you want
 
 ```
-- You need to enable spell-checker which can be done by adding the Following lines to your init.vim
+- You need to enable spell-checker if you want to check the wrong word in the Sentence
 
 ```vim
 
  set spell spelllang=en_us "Choose Any Other Language that you prefer
+
+ " If you don't turn on the spell-checker then the word under your cursor is taken as input
 
 ```
 # Installation
@@ -36,6 +39,12 @@ Plug 'aditya-K2/spellfloat'
 
 Use the Mapping or Call the Function `SpellFloat()` on the line with misspelled word.
 
-If the misspelled is found in the cursor line then a Pop-Up menu with suggestions appears
+If the misspelled word is found in the current line then suggestions for it are displayed else the word under the cursor is taken as input.
 
-![Spell suggestions](./demo.gif)
+## When There is a misspelled word in the current Sentence
+
+![Spell suggestions with misspelled words](./demo1.gif)
+
+## When There is no misspelled word in the current Sentence
+
+![Spell suggestions with no misspelled words](./demo.gif)
