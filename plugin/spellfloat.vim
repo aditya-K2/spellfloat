@@ -1,5 +1,6 @@
 fun! Spellfloat()
 	lua require("spellfloat").openWindow()
+	return ''
 endfun
 
 fun! GetSuggestion()
