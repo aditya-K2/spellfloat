@@ -3,38 +3,6 @@ local hlCursorLine = vim.api.nvim_create_namespace("CursorLine")
 local currentPosition = 0
 local suggestions
 
-local splitCamelCase = function(word)
-
-	local t = {}
-	local temp = ""
-	for i = 1, #word do
-		local char = string.sub(word, i, i)
-		if (string.match(char, "%u") ~= nil and temp ~= "") then
-			table.insert(t , temp)
-			temp = ""
-			temp = temp .. char
-		elseif i == #word then
-			temp = temp .. char
-			table.insert(t , temp)
-		else
-			temp = temp .. char
-		end
-	end
-	if (#t == 1) then
-		return false
-	else
-		return t
-	end
-
-end
-
-local printTable = function(inputTable)
-
-	for i = 1, #inputTable do
-		print(inputTable[i])
-	end
-
-end
 
 local getMisspelledWords = function(inputTable)
 
@@ -111,22 +79,7 @@ local function openWindow()
 	local suggestionsSize
 
 	if(wrongWord ~= "") then
-		if(splitCamelCase(wrongWord)~=false) then
-			local subInCamelCase = getMisspelledWords(splitCamelCase(wrongWord))
-			local wordBuffer = vim.api.nvim_create_buf(false, true)
-			vim.api.nvim_open_win(wordBuffer, true,
-			{relative='cursor', row=1, col=0, width=40, height=10} )
-			vim.wo.number = false
-			vim.wo.relativenumber = false
-			setKeymaps(wordBuffer, "true")
-			vim.api.nvim_buf_set_lines(wordBuffer, 0, -1, false, subInCamelCase)
-			vim.api.nvim_buf_add_highlight(wordBuffer, hlCursorLine, "PmenuSel", currentPosition , 0, 40)
-			suggestions = vim.fn.spellsuggest(vim.fn.expand(SubWord))
-			print(wrongWord)
-			print(vim.inspect(splitCamelCase(wrongWord)))
-		else
-			suggestions = vim.fn.spellsuggest(vim.fn.expand(wrongWord))
-		end
+		suggestions = vim.fn.spellsuggest(vim.fn.expand(wrongWord))
 	else
 		suggestions = vim.fn.spellsuggest(vim.fn.expand("<cword>"))
 	end
@@ -159,6 +112,4 @@ return {
 	decrementHighlight = decrementHighlight,
 	incrementHighlight = incrementHighlight,
 	getMisspelledWords = getMisspelledWords,
-	splitCamelCase = splitCamelCase
-
 }
