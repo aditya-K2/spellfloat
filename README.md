@@ -11,11 +11,11 @@ spellfloat is a Neovim plugin for spelling suggestions from the built-in spell c
 # Prerequisites
 
 - You need Neovim for this plugin
-- Map the Function `SpellFloat()` to some key
+- Map the Function `Spellfloat()` to some key
 
 ```vim
 
-nnoremap <leader>my :call SpellFloat() <CR> "You can use any other keymap you want
+nnoremap <leader>my :call Spellfloat() <CR> "You can use any other keymap you want
 
 ```
 - You need to enable spell-checker if you want to check the wrong word in the Sentence
@@ -37,7 +37,7 @@ Plug 'aditya-K2/spellfloat'
 
 # Usage
 
-Use the Mapping or Call the Function `SpellFloat()` on the line with misspelled word.
+Use the Mapping or Call the Function `Spellfloat()` on the line with misspelled word.
 
 If the misspelled word is found in the current line then suggestions for it are displayed else the word under the cursor is taken as input.
 
